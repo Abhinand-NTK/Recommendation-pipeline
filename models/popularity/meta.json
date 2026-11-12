@@ -1,0 +1,10 @@
+{
+  "name": "popularity",
+  "class": "PopularityRecommender",
+  "params": {
+    "min_count": 1
+  },
+  "train_seconds": 0.02055835723876953,
+  "mlflow_run_id": "2e86941080e24cc2b5ca8f56ce7ce3e4",
+  "feature_version": "09a7b3489c"
+}

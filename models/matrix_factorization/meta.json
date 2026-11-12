@@ -1,0 +1,14 @@
+{
+  "name": "matrix_factorization",
+  "class": "MatrixFactorization",
+  "params": {
+    "factors": 64,
+    "iterations": 15,
+    "reg": 0.08,
+    "bias_reg": 10.0,
+    "seed": 42
+  },
+  "train_seconds": 19.060383558273315,
+  "mlflow_run_id": "98b748f019c644ce9668679c0376487d",
+  "feature_version": "09a7b3489c"
+}

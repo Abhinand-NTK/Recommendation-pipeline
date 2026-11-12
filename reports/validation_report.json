@@ -1,0 +1,243 @@
+{
+  "summary": {
+    "users": {
+      "raw_rows": 6085,
+      "valid_rows": 6055,
+      "rejected_rows": 30,
+      "pass_rate": 0.9950698438783895
+    },
+    "items": {
+      "raw_rows": 3913,
+      "valid_rows": 3893,
+      "rejected_rows": 20,
+      "pass_rate": 0.9948888320981344
+    },
+    "interactions": {
+      "raw_rows": 1002609,
+      "valid_rows": 1000209,
+      "rejected_rows": 2400,
+      "pass_rate": 0.9976062453059966
+    }
+  },
+  "rules": [
+    {
+      "table": "users",
+      "rule": "missing_user_id",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "user_id is null"
+    },
+    {
+      "table": "users",
+      "rule": "user_id_not_integer",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "user_id must be an integer"
+    },
+    {
+      "table": "users",
+      "rule": "duplicate_user_id",
+      "severity": "ERROR",
+      "failed_rows": 15,
+      "description": "user_id appears more than once (first occurrence kept)"
+    },
+    {
+      "table": "users",
+      "rule": "invalid_age",
+      "severity": "ERROR",
+      "failed_rows": 15,
+      "description": "age must be one of the MovieLens age buckets [1, 18, 25, 35, 45, 50, 56]"
+    },
+    {
+      "table": "users",
+      "rule": "invalid_gender_value",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "gender must be M or F"
+    },
+    {
+      "table": "users",
+      "rule": "invalid_occupation",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "occupation code must be in [0, 20]"
+    },
+    {
+      "table": "users",
+      "rule": "missing_gender",
+      "severity": "WARNING",
+      "failed_rows": 15,
+      "description": "gender missing - imputed as 'unknown' during preparation"
+    },
+    {
+      "table": "users",
+      "rule": "missing_age",
+      "severity": "WARNING",
+      "failed_rows": 0,
+      "description": "age missing - imputed as 'unknown' during preparation"
+    },
+    {
+      "table": "users",
+      "rule": "missing_occupation",
+      "severity": "WARNING",
+      "failed_rows": 0,
+      "description": "occupation missing - imputed as 'unknown' during preparation"
+    },
+    {
+      "table": "users",
+      "rule": "missing_zip_code",
+      "severity": "WARNING",
+      "failed_rows": 0,
+      "description": "zip_code missing - imputed as 'unknown' during preparation"
+    },
+    {
+      "table": "items",
+      "rule": "missing_item_id",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "item_id is null"
+    },
+    {
+      "table": "items",
+      "rule": "item_id_not_integer",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "item_id must be an integer"
+    },
+    {
+      "table": "items",
+      "rule": "duplicate_item_id",
+      "severity": "ERROR",
+      "failed_rows": 10,
+      "description": "item_id appears more than once (first occurrence kept)"
+    },
+    {
+      "table": "items",
+      "rule": "missing_title",
+      "severity": "ERROR",
+      "failed_rows": 10,
+      "description": "title is required"
+    },
+    {
+      "table": "items",
+      "rule": "missing_genres",
+      "severity": "WARNING",
+      "failed_rows": 10,
+      "description": "genres missing - imputed as 'unknown' during preparation"
+    },
+    {
+      "table": "interactions",
+      "rule": "missing_user_id",
+      "severity": "ERROR",
+      "failed_rows": 300,
+      "description": "user_id is required"
+    },
+    {
+      "table": "interactions",
+      "rule": "missing_item_id",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "item_id is required"
+    },
+    {
+      "table": "interactions",
+      "rule": "missing_rating",
+      "severity": "ERROR",
+      "failed_rows": 390,
+      "description": "rating is required"
+    },
+    {
+      "table": "interactions",
+      "rule": "missing_timestamp",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "timestamp is required"
+    },
+    {
+      "table": "interactions",
+      "rule": "user_id_not_integer",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "user_id must be an integer"
+    },
+    {
+      "table": "interactions",
+      "rule": "item_id_not_integer",
+      "severity": "ERROR",
+      "failed_rows": 0,
+      "description": "item_id must be an integer"
+    },
+    {
+      "table": "interactions",
+      "rule": "rating_wrong_type",
+      "severity": "ERROR",
+      "failed_rows": 210,
+      "description": "rating is not numeric"
+    },
+    {
+      "table": "interactions",
+      "rule": "rating_out_of_range",
+      "severity": "ERROR",
+      "failed_rows": 300,
+      "description": "rating must be within [1, 5]"
+    },
+    {
+      "table": "interactions",
+      "rule": "timestamp_not_numeric",
+      "severity": "ERROR",
+      "failed_rows": 139,
+      "description": "timestamp must be unix seconds"
+    },
+    {
+      "table": "interactions",
+      "rule": "timestamp_out_of_range",
+      "severity": "ERROR",
+      "failed_rows": 161,
+      "description": "timestamp must be between 1995-01-01 and now"
+    },
+    {
+      "table": "interactions",
+      "rule": "orphan_user_id",
+      "severity": "ERROR",
+      "failed_rows": 300,
+      "description": "user_id not found in validated users table (referential integrity)"
+    },
+    {
+      "table": "interactions",
+      "rule": "orphan_item_id",
+      "severity": "ERROR",
+      "failed_rows": 300,
+      "description": "item_id not found in validated items table (referential integrity)"
+    },
+    {
+      "table": "interactions",
+      "rule": "exact_duplicate_interaction",
+      "severity": "ERROR",
+      "failed_rows": 300,
+      "description": "identical row seen before (first occurrence kept)"
+    },
+    {
+      "table": "interactions",
+      "rule": "conflicting_user_item_pair",
+      "severity": "WARNING",
+      "failed_rows": 0,
+      "description": "same user-item pair with different rating/time - latest kept in preparation"
+    }
+  ],
+  "injected_faults": {
+    "missing_rating": 300,
+    "rating_out_of_range": 300,
+    "rating_wrong_type": 300,
+    "invalid_timestamp": 300,
+    "exact_duplicate_interaction": 300,
+    "orphan_user_id": 300,
+    "orphan_item_id": 300,
+    "missing_user_id": 300,
+    "duplicate_user_id": 15,
+    "invalid_age": 15,
+    "missing_gender (non-critical)": 15,
+    "duplicate_item_id": 10,
+    "missing_title": 10,
+    "missing_genres (non-critical)": 10
+  }
+}

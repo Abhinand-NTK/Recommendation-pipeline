@@ -1,0 +1,128 @@
+2026-11-09 08:25:09,758 | INFO    | orchestrator | ==> ingest (depends on -)
+2026-11-09 08:25:09,758 | INFO    | ingestion | Downloading official MovieLens-1M archive: https://files.grouplens.org/datasets/movielens/ml-1m.zip
+2026-11-09 08:25:10,027 | WARNING | ingestion | Official download failed (HTTPSConnectionPool(host='files.grouplens.org', port=443): Max retries exceeded with url: /datasets/movielens/ml-1m.zip (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); using mirror
+2026-11-09 08:25:10,027 | INFO    | ingestion | Downloading MovieLens-1M from mirror: https://raw.githubusercontent.com/khanhnamle1994/movielens/master
+2026-11-09 08:25:15,881 | INFO    | ingestion | Fetched users=6040 items=3883 interactions=1000209
+2026-11-09 08:25:16,139 | INFO    | ingestion | Injected faults: {'missing_rating': 300, 'rating_out_of_range': 300, 'rating_wrong_type': 300, 'invalid_timestamp': 300, 'exact_duplicate_interaction': 300, 'orphan_user_id': 300, 'orphan_item_id': 300, 'missing_user_id': 300, 'duplicate_user_id': 15, 'invalid_age': 15, 'missing_gender (non-critical)': 15, 'duplicate_item_id': 10, 'missing_title': 10, 'missing_genres (non-critical)': 10}
+2026-11-09 08:25:16,145 | INFO    | ingestion | Wrote users.csv (6085 rows)
+2026-11-09 08:25:16,150 | INFO    | ingestion | Wrote items.csv (3913 rows)
+2026-11-09 08:25:16,940 | INFO    | ingestion | Wrote interactions.csv (1002609 rows)
+2026-11-09 08:25:16,940 | INFO    | orchestrator | ==> validate (depends on ['ingest'])
+2026-11-09 08:25:21,460 | INFO    | validation | users: 6055 valid, 30 rejected
+2026-11-09 08:25:21,466 | INFO    | validation | items: 3893 valid, 20 rejected
+2026-11-09 08:25:21,890 | INFO    | validation | interactions: 1000209 valid, 2400 rejected
+2026-11-09 08:25:21,891 | INFO    | validation | Validation report written to reports/validation_report.md
+2026-11-09 08:25:21,893 | INFO    | orchestrator | ==> prepare (depends on ['validate'])
+2026-11-09 08:25:22,371 | INFO    | preparation | Resolved 0 conflicting user-item duplicates (kept latest)
+2026-11-09 08:25:22,713 | INFO    | preparation | Split global_time: train=800164 test=200045 cutoff=2000-12-02T14:52:18+00:00
+2026-11-09 08:25:22,713 | INFO    | orchestrator | ==> transform (depends on ['prepare'])
+2026-11-09 08:25:24,686 | INFO    | transformation | Interaction matrix 5400x3662, nnz=800164, density=0.0405
+2026-11-09 08:25:24,686 | INFO    | orchestrator | ==> features (depends on ['transform'])
+2026-11-09 08:25:25,061 | INFO    | features | Feature store v09a7b3489c: 6055 user, 3893 item, 800164 interaction rows
+2026-11-09 08:25:25,061 | INFO    | orchestrator | ==> train (depends on ['features'])
+2026-11-09 08:25:28,884 | INFO    | training | Tuning hybrid on validation window: sub-train=720147, val=80017 rows
+2026-11-09 08:25:54,906 | INFO    | training | Best hybrid weights: w_genre=0.10 w_popularity=3.00 (val ndcg_at_10=0.1756)
+2026-11-09 08:26:09,992 | INFO    | training | MF trained (final residual RMSE 0.7242)
+2026-11-09 08:26:36,657 | INFO    | training | Trained models: ['popularity', 'matrix_factorization', 'implicit_als', 'hybrid']
+2026-11-09 08:26:36,658 | INFO    | orchestrator | ==> evaluate (depends on ['train'])
+2026-11-09 08:26:37,436 | INFO    | evaluation | Evaluating on 1122 users
+2026-11-09 08:26:37,624 | INFO    | evaluation | popularity: P@10=0.1995 R@10=0.0493 NDCG@10=0.2141 cov=0.037 div=0.655
+2026-11-09 08:26:37,812 | INFO    | evaluation | matrix_factorization: P@10=0.0989 R@10=0.0273 NDCG@10=0.1052 cov=0.159 div=0.735
+2026-11-09 08:26:37,954 | INFO    | evaluation | implicit_als: P@10=0.2129 R@10=0.0617 NDCG@10=0.2344 cov=0.104 div=0.675
+2026-11-09 08:26:38,226 | INFO    | evaluation | hybrid: P@10=0.2189 R@10=0.0619 NDCG@10=0.2380 cov=0.061 div=0.691
+2026-11-09 08:26:38,847 | INFO    | evaluation | Comparison written to reports/model_comparison.md
+2026-11-09 08:26:38,852 | INFO    | orchestrator | Pipeline finished: ingest=7.2s, validate=5.0s, prepare=0.8s, transform=2.0s, features=0.4s, train=71.6s, evaluate=2.2s
+2026-11-09 08:26:58,833 | INFO    | ingestion | Downloading official MovieLens-1M archive: https://files.grouplens.org/datasets/movielens/ml-1m.zip
+2026-11-09 08:26:59,080 | WARNING | ingestion | Official download failed (HTTPSConnectionPool(host='files.grouplens.org', port=443): Max retries exceeded with url: /datasets/movielens/ml-1m.zip (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); using mirror
+2026-11-09 08:26:59,080 | INFO    | ingestion | Downloading MovieLens-1M from mirror: https://raw.githubusercontent.com/khanhnamle1994/movielens/master
+2026-11-09 08:27:01,789 | INFO    | ingestion | Fetched users=6040 items=3883 interactions=1000209
+2026-11-09 08:27:02,030 | INFO    | ingestion | Injected faults: {'missing_rating': 300, 'rating_out_of_range': 300, 'rating_wrong_type': 300, 'invalid_timestamp': 300, 'exact_duplicate_interaction': 300, 'orphan_user_id': 300, 'orphan_item_id': 300, 'missing_user_id': 300, 'duplicate_user_id': 15, 'invalid_age': 15, 'missing_gender (non-critical)': 15, 'duplicate_item_id': 10, 'missing_title': 10, 'missing_genres (non-critical)': 10}
+2026-11-09 08:27:02,037 | INFO    | ingestion | Wrote users.csv (6085 rows)
+2026-11-09 08:27:02,042 | INFO    | ingestion | Wrote items.csv (3913 rows)
+2026-11-09 08:27:02,847 | INFO    | ingestion | Wrote interactions.csv (1002609 rows)
+2026-11-09 08:27:07,447 | INFO    | validation | users: 6055 valid, 30 rejected
+2026-11-09 08:27:07,455 | INFO    | validation | items: 3893 valid, 20 rejected
+2026-11-09 08:27:07,906 | INFO    | validation | interactions: 1000209 valid, 2400 rejected
+2026-11-09 08:27:07,907 | INFO    | validation | Validation report written to reports/validation_report.md
+2026-11-09 08:27:08,411 | INFO    | preparation | Resolved 0 conflicting user-item duplicates (kept latest)
+2026-11-09 08:27:08,762 | INFO    | preparation | Split global_time: train=800164 test=200045 cutoff=2000-12-02T14:52:18+00:00
+2026-11-09 08:27:10,811 | INFO    | transformation | Interaction matrix 5400x3662, nnz=800164, density=0.0405
+2026-11-09 08:27:11,242 | INFO    | features | Feature store v09a7b3489c: 6055 user, 3893 item, 800164 interaction rows
+2026-11-09 08:27:14,088 | INFO    | training | Tuning hybrid on validation window: sub-train=720147, val=80017 rows
+2026-11-09 08:27:40,297 | INFO    | training | Best hybrid weights: w_genre=0.10 w_popularity=3.00 (val ndcg_at_10=0.1756)
+2026-11-09 08:27:55,046 | INFO    | training | MF trained (final residual RMSE 0.7242)
+2026-11-09 08:28:21,624 | INFO    | training | Trained models: ['popularity', 'matrix_factorization', 'implicit_als', 'hybrid']
+2026-11-09 08:28:22,470 | INFO    | evaluation | Evaluating on 1122 users
+2026-11-09 08:28:22,598 | INFO    | evaluation | popularity: P@10=0.1995 R@10=0.0493 NDCG@10=0.2141 cov=0.037 div=0.655
+2026-11-09 08:28:22,832 | INFO    | evaluation | matrix_factorization: P@10=0.0989 R@10=0.0273 NDCG@10=0.1052 cov=0.159 div=0.735
+2026-11-09 08:28:23,002 | INFO    | evaluation | implicit_als: P@10=0.2129 R@10=0.0617 NDCG@10=0.2344 cov=0.104 div=0.675
+2026-11-09 08:28:23,228 | INFO    | evaluation | hybrid: P@10=0.2189 R@10=0.0619 NDCG@10=0.2380 cov=0.061 div=0.691
+2026-11-09 08:28:23,872 | INFO    | evaluation | Comparison written to reports/model_comparison.md
+2026-11-09 08:28:35,091 | INFO    | ingestion | Downloading official MovieLens-1M archive: https://files.grouplens.org/datasets/movielens/ml-1m.zip
+2026-11-09 08:28:35,370 | WARNING | ingestion | Official download failed (HTTPSConnectionPool(host='files.grouplens.org', port=443): Max retries exceeded with url: /datasets/movielens/ml-1m.zip (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); using mirror
+2026-11-09 08:28:35,371 | INFO    | ingestion | Downloading MovieLens-1M from mirror: https://raw.githubusercontent.com/khanhnamle1994/movielens/master
+2026-11-09 08:28:38,124 | INFO    | ingestion | Fetched users=6040 items=3883 interactions=1000209
+2026-11-09 08:28:38,382 | INFO    | ingestion | Injected faults: {'missing_rating': 300, 'rating_out_of_range': 300, 'rating_wrong_type': 300, 'invalid_timestamp': 300, 'exact_duplicate_interaction': 300, 'orphan_user_id': 300, 'orphan_item_id': 300, 'missing_user_id': 300, 'duplicate_user_id': 15, 'invalid_age': 15, 'missing_gender (non-critical)': 15, 'duplicate_item_id': 10, 'missing_title': 10, 'missing_genres (non-critical)': 10}
+2026-11-09 08:28:38,389 | INFO    | ingestion | Wrote users.csv (6085 rows)
+2026-11-09 08:28:38,394 | INFO    | ingestion | Wrote items.csv (3913 rows)
+2026-11-09 08:28:39,163 | INFO    | ingestion | Wrote interactions.csv (1002609 rows)
+2026-11-09 08:28:43,505 | INFO    | validation | users: 6055 valid, 30 rejected
+2026-11-09 08:28:43,513 | INFO    | validation | items: 3893 valid, 20 rejected
+2026-11-09 08:28:43,928 | INFO    | validation | interactions: 1000209 valid, 2400 rejected
+2026-11-09 08:28:43,929 | INFO    | validation | Validation report written to reports/validation_report.md
+2026-11-09 08:28:44,361 | INFO    | preparation | Resolved 0 conflicting user-item duplicates (kept latest)
+2026-11-09 08:28:44,707 | INFO    | preparation | Split global_time: train=800164 test=200045 cutoff=2000-12-02T14:52:18+00:00
+2026-11-09 08:28:46,663 | INFO    | transformation | Interaction matrix 5400x3662, nnz=800164, density=0.0405
+2026-11-09 08:28:47,054 | INFO    | features | Feature store v09a7b3489c: 6055 user, 3893 item, 800164 interaction rows
+2026-11-09 08:28:49,765 | INFO    | training | Tuning hybrid on validation window: sub-train=720147, val=80017 rows
+2026-11-09 08:29:15,478 | INFO    | training | Best hybrid weights: w_genre=0.10 w_popularity=3.00 (val ndcg_at_10=0.1756)
+2026-11-09 08:29:30,630 | INFO    | training | MF trained (final residual RMSE 0.7242)
+2026-11-09 08:29:57,953 | INFO    | training | Trained models: ['popularity', 'matrix_factorization', 'implicit_als', 'hybrid']
+2026-11-09 08:29:58,724 | INFO    | evaluation | Evaluating on 1122 users
+2026-11-09 08:29:58,854 | INFO    | evaluation | popularity: P@10=0.1995 R@10=0.0493 NDCG@10=0.2141 cov=0.037 div=0.655
+2026-11-09 08:29:59,041 | INFO    | evaluation | matrix_factorization: P@10=0.0989 R@10=0.0273 NDCG@10=0.1052 cov=0.159 div=0.735
+2026-11-09 08:29:59,180 | INFO    | evaluation | implicit_als: P@10=0.2129 R@10=0.0617 NDCG@10=0.2344 cov=0.104 div=0.675
+2026-11-09 08:29:59,382 | INFO    | evaluation | hybrid: P@10=0.2189 R@10=0.0619 NDCG@10=0.2380 cov=0.061 div=0.691
+2026-11-09 08:30:00,036 | INFO    | evaluation | Comparison written to reports/model_comparison.md
+2026-11-12 07:03:27,837 | INFO    | orchestrator | ==> evaluate (depends on ['train'])
+2026-11-12 07:03:30,756 | INFO    | evaluation | Evaluating on 1122 users
+2026-11-12 07:03:32,605 | INFO    | evaluation | popularity: P@10=0.1995 R@10=0.0493 NDCG@10=0.2141 cov=0.037 div=0.655
+2026-11-12 07:03:32,871 | INFO    | evaluation | matrix_factorization: P@10=0.0989 R@10=0.0273 NDCG@10=0.1052 cov=0.159 div=0.735
+2026-11-12 07:03:33,045 | INFO    | evaluation | implicit_als: P@10=0.2129 R@10=0.0617 NDCG@10=0.2344 cov=0.104 div=0.675
+2026-11-12 07:03:33,315 | INFO    | evaluation | hybrid: P@10=0.2189 R@10=0.0619 NDCG@10=0.2380 cov=0.061 div=0.691
+2026-11-12 07:03:34,437 | INFO    | evaluation | Comparison written to reports/model_comparison.md
+2026-11-12 07:03:34,442 | INFO    | orchestrator | Pipeline finished: evaluate=6.6s
+2026-11-12 07:03:45,287 | INFO    | orchestrator | ==> ingest (depends on -)
+2026-11-12 07:03:45,288 | INFO    | ingestion | Downloading official MovieLens-1M archive: https://files.grouplens.org/datasets/movielens/ml-1m.zip
+2026-11-12 07:03:45,539 | WARNING | ingestion | Official download failed (HTTPSConnectionPool(host='files.grouplens.org', port=443): Max retries exceeded with url: /datasets/movielens/ml-1m.zip (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))); using mirror
+2026-11-12 07:03:45,539 | INFO    | ingestion | Downloading MovieLens-1M from mirror: https://raw.githubusercontent.com/khanhnamle1994/movielens/master
+2026-11-12 07:04:03,681 | INFO    | ingestion | Fetched users=6040 items=3883 interactions=1000209
+2026-11-12 07:04:03,949 | INFO    | ingestion | Injected faults: {'missing_rating': 300, 'rating_out_of_range': 300, 'rating_wrong_type': 300, 'invalid_timestamp': 300, 'exact_duplicate_interaction': 300, 'orphan_user_id': 300, 'orphan_item_id': 300, 'missing_user_id': 300, 'duplicate_user_id': 15, 'invalid_age': 15, 'missing_gender (non-critical)': 15, 'duplicate_item_id': 10, 'missing_title': 10, 'missing_genres (non-critical)': 10}
+2026-11-12 07:04:03,957 | INFO    | ingestion | Wrote users.csv (6085 rows)
+2026-11-12 07:04:03,963 | INFO    | ingestion | Wrote items.csv (3913 rows)
+2026-11-12 07:04:04,965 | INFO    | ingestion | Wrote interactions.csv (1002609 rows)
+2026-11-12 07:04:04,967 | INFO    | orchestrator | ==> validate (depends on ['ingest'])
+2026-11-12 07:04:10,482 | INFO    | validation | users: 6055 valid, 30 rejected
+2026-11-12 07:04:10,491 | INFO    | validation | items: 3893 valid, 20 rejected
+2026-11-12 07:04:10,999 | INFO    | validation | interactions: 1000209 valid, 2400 rejected
+2026-11-12 07:04:11,004 | INFO    | validation | Validation report written to reports/validation_report.md
+2026-11-12 07:04:11,006 | INFO    | orchestrator | ==> prepare (depends on ['validate'])
+2026-11-12 07:04:11,518 | INFO    | preparation | Resolved 0 conflicting user-item duplicates (kept latest)
+2026-11-12 07:04:11,919 | INFO    | preparation | Split global_time: train=800164 test=200045 cutoff=2000-12-02T14:52:18+00:00
+2026-11-12 07:04:11,919 | INFO    | orchestrator | ==> transform (depends on ['prepare'])
+2026-11-12 07:04:14,379 | INFO    | transformation | Interaction matrix 5400x3662, nnz=800164, density=0.0405
+2026-11-12 07:04:14,379 | INFO    | orchestrator | ==> features (depends on ['transform'])
+2026-11-12 07:04:14,864 | INFO    | features | Feature store v09a7b3489c: 6055 user, 3893 item, 800164 interaction rows
+2026-11-12 07:04:14,864 | INFO    | orchestrator | ==> train (depends on ['features'])
+2026-11-12 07:04:18,451 | INFO    | training | Tuning hybrid on validation window: sub-train=720147, val=80017 rows
+2026-11-12 07:04:49,558 | INFO    | training | Best hybrid weights: w_genre=0.10 w_popularity=3.00 (val ndcg_at_10=0.1756)
+2026-11-12 07:05:08,810 | INFO    | training | MF trained (final residual RMSE 0.7242)
+2026-11-12 07:05:41,482 | INFO    | training | Trained models: ['popularity', 'matrix_factorization', 'implicit_als', 'hybrid']
+2026-11-12 07:05:41,483 | INFO    | orchestrator | ==> evaluate (depends on ['train'])
+2026-11-12 07:05:42,397 | INFO    | evaluation | Evaluating on 1122 users
+2026-11-12 07:05:42,570 | INFO    | evaluation | popularity: P@10=0.1995 R@10=0.0493 NDCG@10=0.2141 cov=0.037 div=0.655
+2026-11-12 07:05:42,818 | INFO    | evaluation | matrix_factorization: P@10=0.0989 R@10=0.0273 NDCG@10=0.1052 cov=0.159 div=0.735
+2026-11-12 07:05:43,010 | INFO    | evaluation | implicit_als: P@10=0.2129 R@10=0.0617 NDCG@10=0.2344 cov=0.104 div=0.675
+2026-11-12 07:05:43,316 | INFO    | evaluation | hybrid: P@10=0.2189 R@10=0.0619 NDCG@10=0.2380 cov=0.061 div=0.691
+2026-11-12 07:05:44,209 | INFO    | evaluation | Comparison written to reports/model_comparison.md
+2026-11-12 07:05:44,215 | INFO    | orchestrator | Pipeline finished: ingest=19.7s, validate=6.0s, prepare=0.9s, transform=2.5s, features=0.5s, train=86.6s, evaluate=2.7s

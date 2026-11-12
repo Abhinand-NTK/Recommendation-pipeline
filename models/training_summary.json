@@ -1,0 +1,14 @@
+{
+  "runs": {
+    "popularity": "2e86941080e24cc2b5ca8f56ce7ce3e4",
+    "matrix_factorization": "98b748f019c644ce9668679c0376487d",
+    "implicit_als": "2eff5d157d194915b294e545f9ed4831",
+    "hybrid": "3551e41a96b64e64ac68e7fee82228ff"
+  },
+  "best_hybrid_weights": {
+    "w_cf": 1.0,
+    "w_genre": 0.1,
+    "w_popularity": 3.0
+  },
+  "tuning_run": "e093cfa5e66046988ec26d2ed0c31444"
+}

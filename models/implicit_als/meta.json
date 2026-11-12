@@ -1,0 +1,15 @@
+{
+  "name": "implicit_als",
+  "class": "ImplicitALS",
+  "params": {
+    "factors": 128,
+    "iterations": 10,
+    "reg": 100.0,
+    "alpha": 1.0,
+    "binary": true,
+    "seed": 42
+  },
+  "train_seconds": 32.52923321723938,
+  "mlflow_run_id": "2eff5d157d194915b294e545f9ed4831",
+  "feature_version": "09a7b3489c"
+}

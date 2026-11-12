@@ -1,0 +1,17 @@
+# generated data (re-created by the pipeline)
+data/raw/*
+data/processed/*
+data/features/*
+data/errors/*
+!data/**/.gitkeep
+!data/errors/*_errors.csv
+models/**/model.pkl
+reports/logs/*.tmp
+mlruns/
+mlflow.db
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/

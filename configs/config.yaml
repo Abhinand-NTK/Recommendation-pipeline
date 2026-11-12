@@ -1,0 +1,83 @@
+# ---------------------------------------------------------------------------
+# Central configuration for the recommendation pipeline.
+# Every stage reads ONLY from this file, so a run is fully reproducible
+# from (config + raw data hash + code version).
+# ---------------------------------------------------------------------------
+project:
+  name: recsys-movielens-pipeline
+  seed: 42
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  features_dir: data/features
+  errors_dir: data/errors
+  models_dir: models
+  reports_dir: reports
+  logs_dir: reports/logs
+
+ingestion:
+  # movielens-1m : downloads the official GroupLens ML-1M zip (falls back to a GitHub mirror)
+  # local        : reads users.csv / items.csv / interactions.csv from `local_dir`
+  source: movielens-1m
+  official_url: https://files.grouplens.org/datasets/movielens/ml-1m.zip
+  mirror_base_url: https://raw.githubusercontent.com/khanhnamle1994/movielens/master
+  local_dir: null
+  timeout_seconds: 60
+  # Real MovieLens data is already clean, so a small, documented share of
+  # corrupt records is injected to prove the validation layer works.
+  # Set enabled: false to ingest the data untouched.
+  fault_injection:
+    enabled: true
+    interaction_rows: 300   # per error type
+    user_rows: 15
+    item_rows: 10
+
+validation:
+  rating_min: 1
+  rating_max: 5
+  timestamp_min: "1995-01-01"     # MovieLens collection started in the late 1990s
+  timestamp_max: "now"
+  valid_genders: [M, F]
+  valid_ages: [1, 18, 25, 35, 45, 50, 56]
+  valid_occupations_range: [0, 20]
+
+preparation:
+  split:
+    strategy: global_time          # global_time | per_user_time
+    test_fraction: 0.2
+  relevance_threshold: 4           # rating >= 4 counts as a relevant (liked) item
+
+features:
+  bayesian_prior_count: 25         # m in the Bayesian average (shrinkage strength)
+
+training:
+  popularity:
+    min_count: 1
+  mf:
+    factors: 64
+    iterations: 15
+    reg: 0.08                      # L2 on latent factors (scaled by #ratings)
+    bias_reg: 10.0
+  implicit_als:
+    factors: 128
+    iterations: 10
+    reg: 100.0
+    alpha: 1.0
+    binary: true                   # treat every rating as "watched" (confidence 1 + alpha)
+  hybrid:
+    # weights are tuned on a time-based validation slice of TRAIN (never on test)
+    validation_fraction: 0.1
+    tune_metric: ndcg
+    grid:
+      w_genre: [0.0, 0.1, 0.25, 0.5]
+      w_popularity: [0.0, 0.5, 1.0, 1.5, 2.0, 3.0]
+
+evaluation:
+  k: 10
+  extra_k: [5]
+  max_users: null                  # set an int to evaluate on a sample (faster)
+
+mlflow:
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: recsys-movielens-pipeline

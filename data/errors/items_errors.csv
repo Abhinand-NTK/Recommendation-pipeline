@@ -1,0 +1,21 @@
+item_id,title,genres,error_reason
+1526,Fathers' Day (1997),Comedy,duplicate_item_id
+1604,Money Talks (1997),Action|Comedy,duplicate_item_id
+2250,Men Don't Leave (1990),Drama,duplicate_item_id
+1675,Incognito (1997),Crime|Thriller,duplicate_item_id
+1750,Star Kid (1997),Adventure|Children's|Fantasy|Sci-Fi,duplicate_item_id
+3435,Double Indemnity (1944),Crime|Film-Noir,duplicate_item_id
+486,Life with Mikey (1993),Comedy,duplicate_item_id
+3685,Prizzi's Honor (1985),Comedy|Drama|Romance,duplicate_item_id
+800,Lone Star (1996),Drama|Mystery,duplicate_item_id
+2484,Tinseltown (1998),Comedy,duplicate_item_id
+600000,,Horror,missing_title
+600001,,Thriller,missing_title
+600002,,Comedy|Thriller,missing_title
+600003,,Drama,missing_title
+600004,,Comedy,missing_title
+600005,,Thriller,missing_title
+600006,,Drama,missing_title
+600007,,Thriller,missing_title
+600008,,Drama,missing_title
+600009,,Action|Adventure|Horror,missing_title
